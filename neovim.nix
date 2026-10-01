@@ -1,21 +1,30 @@
 { pkgs, 
-    enableAi ? false, 
-    colours ? {
-        base = "#2E3440";
-        border = "#2E3440";
-        fg = "#D8DEE9"; 
-        bg = "#3B4252";
-        fg_selected = "#D8DEE9";
-        bg_selected = "#5E81AC";
-        bg_urgent = "#FF0000";
-    },
+    # enableAi ? false, 
+    # colours ? {
+    #     base = "#2E3440";
+    #     border = "#2E3440";
+    #     fg = "#D8DEE9"; 
+    #     bg = "#3B4252";
+    #     fg_selected = "#D8DEE9";
+    #     bg_selected = "#5E81AC";
+    #     bg_urgent = "#FF0000";
+    # },
 ... }:
 
 let
     lib = pkgs.lib;
+    enableAi = false; # TODO move
     nvimTheme = import ./theme.nix {
         inherit pkgs;
-        colours = colours;
+        colours = {
+            base = "#2E3440";
+            border = "#2E3440";
+            fg = "#D8DEE9"; 
+            bg = "#3B4252";
+            fg_selected = "#D8DEE9";
+            bg_selected = "#5E81AC";
+            bg_urgent = "#FF0000";
+        };
     };
 in
 {

@@ -1,5 +1,4 @@
-{ pkgs, colours }:
-
+{ pkgs, colours, ... }:
 pkgs.writeTextFile {
     name = "gtk-theme.lua";
 
