@@ -1,11 +1,22 @@
-{ lib, config, pkgs, ... }:
+{ pkgs, 
+    enableAi ? false, 
+    colours ? {
+        base = "#2E3440";
+        border = "#2E3440";
+        fg = "#D8DEE9"; 
+        bg = "#3B4252";
+        fg_selected = "#D8DEE9";
+        bg_selected = "#5E81AC";
+        bg_urgent = "#FF0000";
+    },
+... }:
 
 let
-    # nvimTheme = import ./theme.nix {
-    #     inherit pkgs;
-    #     colours = config.settings.values.colours;
-    # }; # Readd with option
-    nvimTheme = "temp";
+    lib = pkgs.lib;
+    nvimTheme = import ./theme.nix {
+        inherit pkgs;
+        colours = colours;
+    };
 in
 {
     enable = true;
@@ -70,16 +81,15 @@ in
         ];
     };
     initLua = ''
-    _G.paths = {
-        vue_language_server =
-            "${pkgs.vue-language-server}/lib/language-tools/packages/typescript-plugin";
-        -- gtk_theme = "${nvimTheme}";
-    }
+        _G.paths = {
+            vue_language_server =
+                "${pkgs.vue-language-server}/lib/language-tools/packages/typescript-plugin";
+                gtk_theme = "${nvimTheme}";
+        }
 
-     _G.options = {
-        enableAi = ${lib.boolToString config.settings.modules.nixos.services.ai.enable},
-    }
-
-    require("main")
+        _G.options = {
+            enableAi = ${lib.boolToString enableAi},
+        }
+        require("main")
     '';
 }

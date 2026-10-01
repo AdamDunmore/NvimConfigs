@@ -6,7 +6,7 @@
         mnw.url = "github:Gerg-L/mnw";
     };
 
-    outputs = { ... } @inputs:
+    outputs = { self, ... } @inputs:
     let
         lib = inputs.nixpkgs.lib;
         systems = [
@@ -22,15 +22,24 @@
         };
         newNeovim = pkgs: inputs.mnw.lib.wrap pkgs ./neovim.nix;
     in
-    {             
-        # Devshell
-        devShells = forEachSystem(system: let
+    {     
+        # TODO add nixos and hm module
+        # TODO add options to package
+        apps = forEachSystem(system: { default = { type = "app"; program = "${self.packages.${system}.default}/bin/neovim"; };});
+        packages = forEachSystem(system: let
             pkgs = newPkgs system; 
             neovim = newNeovim pkgs;
         in {
+            "default" = neovim; 
+        });
+
+        # Devshell
+        devShells = forEachSystem(system: let
+            pkgs = newPkgs system; 
+        in {
             "default" = pkgs.mkShell {
                 buildInputs = [
-                    neovim
+                    self.packages.${system}.default
                 ];
                 shellHook = ''
 
