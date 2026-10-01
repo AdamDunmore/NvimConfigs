@@ -1,33 +1,14 @@
-{ pkgs, 
-    # enableAi ? false, 
-    # colours ? {
-    #     base = "#2E3440";
-    #     border = "#2E3440";
-    #     fg = "#D8DEE9"; 
-    #     bg = "#3B4252";
-    #     fg_selected = "#D8DEE9";
-    #     bg_selected = "#5E81AC";
-    #     bg_urgent = "#FF0000";
-    # },
-... }:
+{ pkgs, config, ... }:
 
 let
     lib = pkgs.lib;
-    enableAi = false; # TODO move
     nvimTheme = import ./theme.nix {
         inherit pkgs;
-        colours = {
-            base = "#2E3440";
-            border = "#2E3440";
-            fg = "#D8DEE9"; 
-            bg = "#3B4252";
-            fg_selected = "#D8DEE9";
-            bg_selected = "#5E81AC";
-            bg_urgent = "#FF0000";
-        };
+        colours = config.settings.modules.home.terminal.editors.nvim.colours;
     };
 in
 {
+    imports = [ ./options.nix ];
     enable = true;
     appName = "nv";
     desktopEntry = false;
@@ -97,7 +78,7 @@ in
         }
 
         _G.options = {
-            enableAi = ${lib.boolToString enableAi},
+            enableAi = ${lib.boolToString config.settings.modules.home.terminal.editors.nvim.ai}
         }
         require("main")
     '';
