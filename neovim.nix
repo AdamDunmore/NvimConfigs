@@ -1,10 +1,11 @@
 { pkgs, config, ... }:
 
 let
+    cfg = config.settings.modules.home.terminal.editors.nvim;
     lib = pkgs.lib;
     nvimTheme = import ./theme.nix {
         inherit pkgs;
-        colours = config.settings.modules.home.terminal.editors.nvim.colours;
+        colours = cfg.colours;
     };
 in
 {
@@ -46,7 +47,10 @@ in
         go
     ];
     plugins = {
-        dev.config.pure = ./.;
+        dev.config = {
+            pure = ./.;
+            impure = cfg.localPath;
+        };
         start = with pkgs.vimPlugins; [
             # Snacks
             snacks-nvim
@@ -78,7 +82,7 @@ in
         }
 
         _G.options = {
-            enableAi = ${lib.boolToString config.settings.modules.home.terminal.editors.nvim.ai}
+            enableAi = ${lib.boolToString cfg.ai}
         }
         require("main")
     '';

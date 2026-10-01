@@ -33,6 +33,13 @@ in
             bg_selected = mkColourOption "Background Selected" "#5E81AC";
             bg_urgent = mkColourOption "Background Urgent" "#FF0000";
         }; 
+
+        localPath = mkOption {
+            type = lib.types.str;
+            default = "~/Projects/NvimConfigs/"; # TODO change when move to a more sensible path
+            example = "~/.config/neovim/";
+            description = "The path to your neovim config (used for dev mode)";
+        };
     };
 }
 

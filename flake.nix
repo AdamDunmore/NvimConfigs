@@ -31,6 +31,7 @@
             neovim = newNeovim pkgs;
         in {
             "default" = neovim; 
+            "dev" = self.packages.${system}.default.devMode;
         });
 
         # Devshell
@@ -41,10 +42,8 @@
                 buildInputs = [
                     self.packages.${system}.default
                 ];
-                shellHook = ''
-
-                '';
             };
+            "dev" = pkgs.mkShell { buildInputs = [ self.packages.${system}.dev ]; };
         });
     };
 }
