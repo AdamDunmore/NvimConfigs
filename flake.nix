@@ -23,8 +23,11 @@
         newNeovim = pkgs: inputs.mnw.lib.wrap pkgs ./neovim.nix;
     in
     {     
-        # TODO add nixos and hm module
-        # TODO add options to package
+        homeManagerModules.default = { pkgs, ... }: {
+            imports = [ ./options.nix ];
+            config = { home.packages = [ (newNeovim pkgs) ]; }; 
+        };
+
         apps = forEachSystem(system: { default = { type = "app"; program = "${self.packages.${system}.default}/bin/neovim"; };});
         packages = forEachSystem(system: let
             pkgs = newPkgs system; 

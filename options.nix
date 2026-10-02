@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, ... }:
 let
     mkColourOption = colour: default: mkOption {
         type = lib.types.str;
@@ -9,10 +9,10 @@ let
     inherit (lib) mkOption;
 in
 {
-    options.settings.modules.home.terminal.editors.nvim = {
+    options.programs.configuredNeovim = {
         enable = mkOption {
             type = lib.types.bool;
-            default = config.settings.modules.home.terminal.enable;
+            default = true;
             example = false;
             description = "Enables the nvim module";
         };

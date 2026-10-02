@@ -1,7 +1,7 @@
 { pkgs, config, ... }:
 
 let
-    cfg = config.settings.modules.home.terminal.editors.nvim;
+    cfg = config.programs.configuredNeovim;
     lib = pkgs.lib;
     nvimTheme = import ./theme.nix {
         inherit pkgs;
