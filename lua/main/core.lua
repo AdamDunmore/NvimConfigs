@@ -2,6 +2,9 @@
 vim.opt.number = true;
 vim.opt.relativenumber = true;
 
+-- Disables line wrap
+vim.opt.wrap = false;
+
 -- Adds mouse support
 vim.opt.mouse = "a";
 
