@@ -59,6 +59,7 @@ in
             bufferline-nvim
             lualine-nvim
             mini-icons
+            which-key-nvim
 
             # Code #
             nvim-treesitter.withAllGrammars
